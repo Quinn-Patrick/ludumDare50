@@ -12,7 +12,7 @@ namespace QuinnLD.Core
 
             if (pickup == null) return;
 
-            pickup.OnCollect();
+            pickup.OnCollect(gameObject);
         }
     }
 }

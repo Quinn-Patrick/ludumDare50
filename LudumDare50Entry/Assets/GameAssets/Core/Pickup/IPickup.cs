@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPickup
 {
-    public void OnCollect();
+    public void OnCollect(GameObject collider);
 }

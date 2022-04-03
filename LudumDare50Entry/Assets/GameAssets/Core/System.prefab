@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4859669666143834974}
   - component: {fileID: 786150521806813338}
+  - component: {fileID: 381902890}
+  - component: {fileID: 8962919073554354349}
+  - component: {fileID: 8351751112754365811}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -44,3 +47,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startTime: 60
+--- !u!114 &381902890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971484120233663939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c8aa95cf5026d428eb687a5427c35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8962919073554354349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971484120233663939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee4899e1415be847805a25b649eb9bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActiveAsteroids: 0
+  MaxAsteroids: 20
+  GoalCollected: 0
+  AsteroidSpawners: []
+  _input: {fileID: 8351751112754365811}
+--- !u!114 &8351751112754365811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971484120233663939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9fd5f2be9f5be4fb5e07e600bf75e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UpDown: 0
+  LeftRight: 0
+  Shooting: 0
+  Dashing: 0
+  Advancing: 0

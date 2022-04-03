@@ -7,37 +7,76 @@ namespace QuinnLD.Core
     public class Timer : MonoBehaviour
     {
         public static Timer Instance;
-        private float _currentTime = 0f;
+        private float _timeRemaining = 0f;
+        private float _timeElapsed = 0f;
         [SerializeField] private float _startTime;
         private void Awake()
         {
-            _currentTime = _startTime;
+            _timeRemaining = _startTime;
             if(Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(this);
             }
             else
             {
                 Destroy(this);
             }
         }
+
+        private void OnEnable()
+        {
+            LevelManager.Instance.LevelProgressed += OnLevelProgression;
+        }
+
+        private void OnDisable()
+        {
+            LevelManager.Instance.LevelProgressed -= OnLevelProgression;
+        }
+        private void OnLevelProgression()
+        {
+            _timeRemaining = _startTime;
+            _timeElapsed = 0;
+        }
+
         private void Update()
         {
-            _currentTime -= Time.deltaTime;
+            _timeRemaining -= Time.deltaTime;
+            _timeElapsed += Time.deltaTime;
         }
-        public string GetFormattedTime()
+        public string GetFormattedTimeRemaining()
         {
-            return $"{(int)_currentTime / 60:0}:{(int)_currentTime % 60:00}.{GetFractionalSeconds():00}";
+            return $"{(int)_timeRemaining / 60:0}:{(int)_timeRemaining % 60:00}.{GetFractionalSeconds(_timeRemaining):00}";
             
         }
-        private int GetFractionalSeconds()
+        public string GetFormattedTimeElapsed()
         {
-            return Mathf.FloorToInt((_currentTime - Mathf.Floor(_currentTime)) * 100);
+            return $"{(int)_timeElapsed / 60:0}:{(int)_timeElapsed % 60:00}.{GetFractionalSeconds(_timeElapsed):00}";
+
+        }
+        private int GetFractionalSeconds(float time)
+        {
+            return Mathf.FloorToInt((time - Mathf.Floor(time)) * 100);
         }
         public void AddTime(float timeAmount)
         {
-            _currentTime += timeAmount;
+            if (_timeElapsed > 30) timeAmount /= 2;
+            if (_timeElapsed > 60) timeAmount /= 2;
+            if (LevelManager.Instance.GetLevel() > 10) timeAmount /= 2;
+            if (LevelManager.Instance.GetLevel() > 20) timeAmount /= 2;
+            _timeRemaining += timeAmount;
+        }
+        public float GetElapsedTime()
+        {
+            return _timeElapsed;
+        }
+        public float GetRemainingTime()
+        {
+            return _timeRemaining;
+        }
+        public void ResetTime()
+        {
+            _timeRemaining = _startTime;
+            _timeElapsed = 0f;
         }
     }
 }

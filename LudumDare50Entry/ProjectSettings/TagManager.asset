@@ -3,17 +3,23 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - AsteroidPool
+  - TimePickupPool
+  - GoalPickup
+  - GunPowerupPool
+  - FattyPool
+  - EnemyPool
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bullet
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Enemy
+  - Player
+  - EnemyBullets
   - 
   - 
   - 
