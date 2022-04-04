@@ -26,7 +26,11 @@ namespace QuinnLD.Core
         }
         public void GainScoreTimeBonus(int baseScore)
         {
-            _score += baseScore * Mathf.FloorToInt(Mathf.Pow(Timer.Instance.GetElapsedTime() / 10, 2));
+            _score += GetTimeBonusScoreValue(baseScore);
+        }
+        public int GetTimeBonusScoreValue(int baseScore)
+        {
+            return baseScore * Mathf.FloorToInt(Mathf.Pow(Timer.Instance.GetElapsedTime() / 2, 2));
         }
         public void GainScore(int baseScore)
         {

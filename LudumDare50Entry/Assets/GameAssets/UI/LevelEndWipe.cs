@@ -9,6 +9,7 @@ namespace QuinnLD.GUI
     public class LevelEndWipe : MonoBehaviour
     {
         [SerializeField] Animator _anim;
+        [SerializeField] private GameBase _base;
         private void FixedUpdate()
         {
             if(Timer.Instance.GetRemainingTime() <= 0)
@@ -18,7 +19,7 @@ namespace QuinnLD.GUI
         }
         public void GameOver()
         {
-            SceneManager.LoadScene(2);
+            
         }
     }
 }

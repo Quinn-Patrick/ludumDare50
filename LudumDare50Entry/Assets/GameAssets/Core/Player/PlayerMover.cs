@@ -14,16 +14,25 @@ namespace QuinnLD.Core
 
         [SerializeField] private float _baseMaxSpeed;
         [SerializeField] private float _dashMaxSpeed;
+        [SerializeField] private SpriteRenderer _exhaust;
 
         private float _timeOut;
 
+        public delegate void ImpactHandler();
+        public event ImpactHandler Impacted;
+
         private void OnEnable()
         {
-            LevelManager.Instance.LevelProgressed += () => transform.position = new Vector2(0f, 0f);
+            LevelManager.Instance.LevelProgressed += ResetPosition;
         }
         private void OnDisable()
         {
-            LevelManager.Instance.LevelProgressed -= () => transform.position = new Vector2(0f, 0f);
+            LevelManager.Instance.LevelProgressed -= ResetPosition;
+        }
+
+        private void ResetPosition()
+        {
+            transform.position = new Vector2(0f, 0f);
         }
 
         private void FixedUpdate()
@@ -61,6 +70,25 @@ namespace QuinnLD.Core
             }
             ApplyFriction();
             EnsureVelocity();
+
+            if(_exhaust != null)
+            { 
+                if(Mathf.Abs(leftRight) < 0.001 && Mathf.Abs(upDown) < 0.001)
+                {
+                    _exhaust.transform.localScale = Vector3.zero;
+                }
+                else
+                {
+                    if (_controls.Dashing)
+                    {
+                        _exhaust.transform.localScale = Vector3.one;
+                    }
+                    else
+                    {
+                        _exhaust.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+                    }
+                }
+            }
         }
 
         private void EnsureVelocity()
@@ -92,8 +120,34 @@ namespace QuinnLD.Core
         {
             if(collision.relativeVelocity.magnitude > 2f && _timeOut < -0.5f)
             {
+                Impacted?.Invoke();
+                Screenshake.Instance.AddScreenshake(2f);
                 _timeOut = 1f;
             }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.gameObject.CompareTag("Base")) return;
+            GameBase gbase = collision.gameObject.GetComponent<GameBase>();
+            if (gbase == null) return;
+            gbase.IsInBase = true;
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (!collision.gameObject.CompareTag("Base")) return;
+            GameBase gbase = collision.gameObject.GetComponent<GameBase>();
+            if (gbase == null) return;
+            gbase.IsInBase = true;
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (!collision.gameObject.CompareTag("Base")) return;
+            GameBase gbase = collision.gameObject.GetComponent<GameBase>();
+            if (gbase == null) return;
+            gbase.IsInBase = false;
         }
     }
 }

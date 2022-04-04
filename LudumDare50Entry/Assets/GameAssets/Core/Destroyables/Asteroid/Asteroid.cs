@@ -13,7 +13,7 @@ namespace QuinnLD.Core
         }
         private void OnEnable()
         {
-            LevelManager.Instance.LevelProgressed += () => Remove();
+            LevelManager.Instance.LevelProgressed += Remove;
             ChooseDrop();
 
             RandomizeStartingMovement();
@@ -22,7 +22,7 @@ namespace QuinnLD.Core
         }
         private void OnDisable()
         {
-            LevelManager.Instance.LevelProgressed -= () => Remove();
+            LevelManager.Instance.LevelProgressed -= Remove;
             LevelManager.Instance.ActiveAsteroids--;
         }
         private void RandomizeStartingMovement()

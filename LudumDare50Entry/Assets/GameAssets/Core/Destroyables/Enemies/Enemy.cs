@@ -15,6 +15,7 @@ namespace QuinnLD.Core
         new public event HitHandler WasHit;
         override public void OnHit()
         {
+            Screenshake.Instance.AddScreenshake(0.1f);
             WasHit?.Invoke();
             _health--;
             if (_health <= 0) Die();
@@ -22,12 +23,13 @@ namespace QuinnLD.Core
 
         private void Die()
         {
+            Screenshake.Instance.AddScreenshake(1f);
             _health = 5;
             _baseScore = 500;
             GetDrop();
             _drop = Pickups.None;
             Score.Instance.GainScore(_baseScore * LevelManager.Instance.GetLevel());
-            Remove();
+            Kill();
         }
         private void FixedUpdate()
         {
@@ -57,7 +59,7 @@ namespace QuinnLD.Core
         {
             
             float roll = Random.Range(0f, 100f);
-            if (roll > 25)
+            if (roll > 25 && roll < 50)
             {
                 _drop = Pickups.TimeExtender;
             }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace QuinnLD.Core
 {
@@ -10,6 +11,8 @@ namespace QuinnLD.Core
         private float _timeRemaining = 0f;
         private float _timeElapsed = 0f;
         [SerializeField] private float _startTime;
+        [SerializeField] private GameBase _base;
+        
         private void Awake()
         {
             _timeRemaining = _startTime;
@@ -35,13 +38,49 @@ namespace QuinnLD.Core
         private void OnLevelProgression()
         {
             _timeRemaining = _startTime;
+
+            if(LevelManager.Instance.GetLevel() > 4)
+            {
+                _timeRemaining -= 5;
+            }
+            if (LevelManager.Instance.GetLevel() > 8)
+            {
+                _timeRemaining -= 5;
+            }
+            if (LevelManager.Instance.GetLevel() > 12)
+            {
+                _timeRemaining -= 5;
+            }
+            if (LevelManager.Instance.GetLevel() > 16)
+            {
+                _timeRemaining -= 5;
+            }
+
             _timeElapsed = 0;
         }
 
         private void Update()
         {
-            _timeRemaining -= Time.deltaTime;
-            _timeElapsed += Time.deltaTime;
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+            {
+                _timeRemaining -= Time.deltaTime;
+                _timeElapsed += Time.deltaTime;
+            }
+
+            if(_timeRemaining <= 0)
+            {
+                if (!_base.IsInBase || !LevelManager.Instance.GoalCollected)
+                {
+                    if (SceneManager.GetActiveScene() != SceneManager.GetSceneByBuildIndex(2))
+                    {
+                        SceneManager.LoadScene(2);
+                    }
+                }
+                else
+                {
+                    LevelManager.Instance.AdvanceLevel();
+                }
+            }
         }
         public string GetFormattedTimeRemaining()
         {
@@ -61,8 +100,8 @@ namespace QuinnLD.Core
         {
             if (_timeElapsed > 30) timeAmount /= 2;
             if (_timeElapsed > 60) timeAmount /= 2;
-            if (LevelManager.Instance.GetLevel() > 10) timeAmount /= 2;
-            if (LevelManager.Instance.GetLevel() > 20) timeAmount /= 2;
+            if (LevelManager.Instance.GetLevel() > 8) timeAmount /= 2;
+            if (LevelManager.Instance.GetLevel() > 12) timeAmount /= 2;
             _timeRemaining += timeAmount;
         }
         public float GetElapsedTime()

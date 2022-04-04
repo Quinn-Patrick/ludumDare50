@@ -16,11 +16,12 @@ namespace QuinnLD.Core
         public event DeathHandler Killed;
         public virtual void OnHit()
         {
+            Screenshake.Instance.AddScreenshake(0.5f);
             WasHit?.Invoke();
             GetDrop();
             _drop = Pickups.None;
             Score.Instance.GainScore(_baseScore * LevelManager.Instance.GetLevel());
-            Remove();
+            Kill();
         }
 
         public void SetDrop(Pickups pickup)
@@ -59,9 +60,13 @@ namespace QuinnLD.Core
                 default: break;
             }
         }
-        public virtual void Remove()
+        public void Kill()
         {
             Killed?.Invoke();
+            Remove();
+        }
+        public virtual void Remove()
+        {
             Pool.PoolObject(this);
         }
     }

@@ -14,8 +14,7 @@ namespace QuinnLD.GUI
         {
             if (_input.Advancing)
             {
-                SceneManager.LoadScene(_targetScene);
-                if(Score.Instance != null)
+                if (Score.Instance != null)
                 {
                     Score.Instance.ResetScore();
                 }
@@ -23,6 +22,9 @@ namespace QuinnLD.GUI
                 {
                     Timer.Instance.ResetTime();
                 }
+                
+                SceneManager.LoadScene(_targetScene);
+                
             }
             
         }

@@ -10,7 +10,8 @@ namespace QuinnLD.Core
 
         private void Update()
         {
-            transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, -30);
+            float shake = Screenshake.Instance.GetScreenShake();
+            transform.position = new Vector3(_player.transform.position.x + Random.Range(-shake, shake), _player.transform.position.y + Random.Range(-shake, shake), -30);
         }
     }
 }

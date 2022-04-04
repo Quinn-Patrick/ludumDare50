@@ -12,6 +12,7 @@ namespace QuinnLD.Core
         new public event HitHandler WasHit;
         override public void OnHit()
         {
+            Screenshake.Instance.AddScreenshake(0.1f);
             WasHit?.Invoke();
             _health--;
             if (_health <= 0) Die();
@@ -19,12 +20,13 @@ namespace QuinnLD.Core
 
         private void Die()
         {
+            Screenshake.Instance.AddScreenshake(1f);
             _health = 10;
             _baseScore = 1000;
             GetDrop();
             _drop = Pickups.None;
             Score.Instance.GainScore(_baseScore * LevelManager.Instance.GetLevel());
-            Remove();
+            Kill();
         }
 
         override protected void ChooseDrop()

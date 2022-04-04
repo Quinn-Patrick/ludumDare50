@@ -8,16 +8,26 @@ namespace QuinnLD.Core
     {
         private float _lifetime = 0;
         private float _lifetimeLimit = 15;
+
+        public delegate void PickupHandler();
+        public event PickupHandler pickedUp;
         private void OnEnable()
         {
-            LevelManager.Instance.LevelProgressed += () => Pool.PoolObject(this);
+            LevelManager.Instance.LevelProgressed += PoolThis;
+            _lifetime = 0f;
         }
         private void OnDisable()
         {
-            LevelManager.Instance.LevelProgressed += () => Pool.PoolObject(this);
+            LevelManager.Instance.LevelProgressed -= PoolThis;
+        }
+
+        private void PoolThis()
+        {
+            Pool.PoolObject(this);
         }
         public void OnCollect(GameObject collider)
         {
+            pickedUp?.Invoke();
             GunManager gun = collider.GetComponent<GunManager>();
             if (gun == null) return;
             gun.IncreaseGunLevel();

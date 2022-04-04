@@ -10,6 +10,7 @@ namespace QuinnLD.GUI
     {
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private Animator _anim;
+        [SerializeField] private AudioSource _audio;
         private void FixedUpdate()
         {
             string lastText = _text.text;
@@ -30,6 +31,10 @@ namespace QuinnLD.GUI
             {
                 _anim.SetTrigger("NewNumber");
             }
+        }
+        private void PlaySound()
+        {
+            _audio.Play();
         }
     }
 }

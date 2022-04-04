@@ -13,8 +13,15 @@ namespace QuinnLD.Core
 
         private void OnEnable()
         {
-            LevelManager.Instance.LevelProgressed += () => Pool.PoolObject(this);
+            LevelManager.Instance.LevelProgressed += PoolThis;
             _duration = _maxDuration;
+        }
+
+        
+
+        private void PoolThis()
+        {
+            Pool.PoolObject(this);
         }
 
         private void FixedUpdate()
@@ -29,7 +36,7 @@ namespace QuinnLD.Core
         private void OnDisable()
         {
             _body.velocity = Vector2.zero;
-            LevelManager.Instance.LevelProgressed -= () => Pool.PoolObject(this);
+            LevelManager.Instance.LevelProgressed -= PoolThis;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

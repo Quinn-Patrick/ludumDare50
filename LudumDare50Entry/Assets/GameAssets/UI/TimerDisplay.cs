@@ -12,7 +12,7 @@ namespace QuinnLD.GUI
 
         private void Update()
         {
-            _text.text = $"Remaining: {Timer.Instance.GetFormattedTimeRemaining()}";
+            _text.text = $"{Timer.Instance.GetFormattedTimeRemaining()}";
         }
     }
 }

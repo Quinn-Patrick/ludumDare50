@@ -10,6 +10,8 @@ TagManager:
   - GunPowerupPool
   - FattyPool
   - EnemyPool
+  - Asteroid
+  - Base
   layers:
   - Default
   - TransparentFX
@@ -20,8 +22,8 @@ TagManager:
   - Enemy
   - Player
   - EnemyBullets
-  - 
-  - 
+  - Asteroid
+  - Base
   - 
   - 
   - 
